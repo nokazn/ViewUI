@@ -532,8 +532,10 @@
 
 
                     const pickerPossibleValues = timePickers[pickerIndex][`${timeParts[col]}List`];
-                    const nextIndex = pickerPossibleValues.findIndex(({text}) => this.focusedTime.time[pickerIndex][col] === text) + increment;
-                    const nextValue = pickerPossibleValues[nextIndex % pickerPossibleValues.length].text;
+                    const currentIndex = pickerPossibleValues.findIndex(({text}) => this.focusedTime.time[pickerIndex][col] === text)
+                    let nextIndex = (currentIndex + increment) % pickerPossibleValues.length
+                    if (nextIndex < 0) nextIndex += pickerPossibleValues.length
+                    const nextValue = pickerPossibleValues[nextIndex].text;
                     const times = this.focusedTime.time.map((time, i) => {
                         if (i !== pickerIndex) return time;
                         time[col] = nextValue;
